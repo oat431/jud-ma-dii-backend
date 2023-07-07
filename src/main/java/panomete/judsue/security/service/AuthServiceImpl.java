@@ -39,24 +39,24 @@ public class AuthServiceImpl implements AuthService {
         Authorities role = authDao.getAuthorityByName(Roles.ROLE_USER);
 
         Location location = Location.builder()
-                .address(user.getAddress())
-                .city(user.getCity())
-                .state(user.getState())
-                .country(user.getCountry())
-                .zip(user.getZip())
+                .address(user.address())
+                .city(user.city())
+                .state(user.state())
+                .country(user.country())
+                .zip(user.zip())
                 .build();
         authDao.saveLocation(location);
 
         Users newUser = Users.builder()
-                .profilePicture(user.getProfilePicture())
-                .username(user.getUsername())
-                .platformName(user.getPlatformName())
-                .password(encoder.encode(user.getPassword()))
-                .email(user.getEmail())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .tel(user.getTel())
-                .birthday(user.getBirthday())
+                .profilePicture(user.profilePicture())
+                .username(user.username())
+                .platformName(user.platformName())
+                .password(encoder.encode(user.password()))
+                .email(user.email())
+                .firstName(user.firstName())
+                .lastName(user.lastName())
+                .tel(user.tel())
+                .birthday(user.birthday())
                 .location(location)
                 .authorities(role)
                 .build();
@@ -67,19 +67,19 @@ public class AuthServiceImpl implements AuthService {
     public Users updateUser(UUID userId, UpdateRequest user) {
         Users oldUser = authDao.getUserById(userId);
         Location location = oldUser.getLocation();
-        location.setAddress(user.getAddress());
-        location.setCity(user.getCity());
-        location.setState(user.getState());
-        location.setCountry(user.getCountry());
-        location.setZip(user.getZip());
+        location.setAddress(user.address());
+        location.setCity(user.city());
+        location.setState(user.state());
+        location.setCountry(user.country());
+        location.setZip(user.zip());
         authDao.saveLocation(location);
 
-        oldUser.setProfilePicture(user.getProfilePicture());
-        oldUser.setPlatformName(user.getPlatformName());
-        oldUser.setFirstName(user.getFirstName());
-        oldUser.setLastName(user.getLastName());
-        oldUser.setTel(user.getTel());
-        oldUser.setBirthday(user.getBirthday());
+        oldUser.setProfilePicture(user.profilePicture());
+        oldUser.setPlatformName(user.platformName());
+        oldUser.setFirstName(user.firstName());
+        oldUser.setLastName(user.lastName());
+        oldUser.setTel(user.tel());
+        oldUser.setBirthday(user.birthday());
         oldUser.setLocation(location);
 
         return authDao.saveUser(oldUser);

@@ -68,6 +68,18 @@ public class WebSecurityConfig {
             "/api/v1/user/**"
     };
 
+    private static final String[] REQUESTER_WHITELIST = {
+            "/api/v1/requester/**"
+    };
+
+    private static final String[] PURCHASER_WHITELIST = {
+            "/api/v1/purchaser/**"
+    };
+
+    private static final String[] APPROVER_WHITELIST = {
+            "/api/v1/approver/**"
+    };
+
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -79,6 +91,9 @@ public class WebSecurityConfig {
                         .requestMatchers(ACCOUNT_WHITELIST).hasAnyAuthority(Roles.ROLE_ADMIN.name(), Roles.ROLE_USER.name())
                         .requestMatchers(ADMIN_WHITELIST).hasAuthority(Roles.ROLE_ADMIN.name())
                         .requestMatchers(USER_WHITELIST).hasAuthority(Roles.ROLE_USER.name())
+                        .requestMatchers(REQUESTER_WHITELIST).hasAuthority(Roles.ROLE_REQUESTER.name())
+                        .requestMatchers(PURCHASER_WHITELIST).hasAuthority(Roles.ROLE_PURCHASER.name())
+                        .requestMatchers(APPROVER_WHITELIST).hasAuthority(Roles.ROLE_APPROVER.name())
                         .anyRequest().authenticated()
                 );
         http.authenticationProvider(authenticationProvider());

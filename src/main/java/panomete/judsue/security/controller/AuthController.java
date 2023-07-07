@@ -48,11 +48,11 @@ public class AuthController {
     @PostMapping("/")
     @Operation(summary = "Login", description = "Login")
     public ResponseEntity<?> login(@RequestBody LoginRequest login) {
-        if (login.getUsername() == null) {
-            return createToken(loginWithEmail(login.getEmail(), login.getPassword()));
+        if (login.username() == null) {
+            return createToken(loginWithEmail(login.email(), login.password()));
         }
-        if (login.getEmail() == null) {
-            return createToken(loginWithUsername(login.getUsername(), login.getPassword()));
+        if (login.email() == null) {
+            return createToken(loginWithUsername(login.username(), login.password()));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("username or email are missing");
     }
@@ -61,9 +61,7 @@ public class AuthController {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
-        JwtResponse jwtResponse = JwtResponse.builder()
-                .token(jwtTokenUtil.generateJWT(user, 604800L))
-                .build();
+        JwtResponse jwtResponse = new JwtResponse(jwtTokenUtil.generateJWT(user, 604800L));
         return ResponseEntity.ok(jwtResponse);
     }
 
@@ -121,9 +119,7 @@ public class AuthController {
         String token = request.getHeader("Authorization").substring(7);
         String refreshedToken = jwtTokenUtil.refreshJWT(token, 604800L);
         return ResponseEntity.ok(
-                JwtResponse.builder()
-                        .token(refreshedToken)
-                        .build()
+                new JwtResponse(refreshedToken)
         );
     }
 
