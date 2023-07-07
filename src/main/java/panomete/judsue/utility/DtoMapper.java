@@ -4,8 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
-import panomete.judsue.product.entity.Product;
-import panomete.judsue.product.payload.response.ProductDto;
+import panomete.judsue.item.entity.Item;
+import panomete.judsue.item.payload.response.ItemDto;
 import panomete.judsue.security.entity.Users;
 import panomete.judsue.security.payload.response.AuthDto;
 
@@ -15,9 +15,9 @@ import java.util.List;
 public interface DtoMapper {
     DtoMapper INSTANCE = Mappers.getMapper(DtoMapper.class);
 
-    @Mapping(target = "price", expression = "java(product.getPrice().toString())")
-    ProductDto toProductDto(Product product);
-    List<ProductDto> toProductDto(List<Product> products);
+    @Mapping(target = "price", expression = "java(item.getPrice().toString())")
+    ItemDto toProductDto(Item item);
+    List<ItemDto> toProductDto(List<Item> items);
 
     @Mappings({
             @Mapping(target = "id", expression = "java(user.getUserId())"),
