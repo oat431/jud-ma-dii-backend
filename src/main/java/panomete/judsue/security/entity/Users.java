@@ -46,7 +46,7 @@ public class Users implements UserDetails {
     Date lastPasswordReset = Date.from(LocalDate.of(2023, 1, 1).atStartOfDay(ZoneId.systemDefault()).toInstant());
 
     @Builder.Default
-    Boolean enables = true;
+    Boolean enables = false;
 
     @Email
     @Column(unique = true)

@@ -88,9 +88,15 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(FREE_AREA).permitAll()
-                        .requestMatchers(ACCOUNT_WHITELIST).hasAnyAuthority(Roles.ROLE_ADMIN.name(), Roles.ROLE_USER.name())
+                        .requestMatchers(ACCOUNT_WHITELIST).hasAnyAuthority(
+                                Roles.ROLE_ADMIN.name(),
+                                Roles.ROLE_USER.name(),
+                                Roles.ROLE_REQUESTER.name(),
+                                Roles.ROLE_PURCHASER.name(),
+                                Roles.ROLE_APPROVER.name()
+                        )
                         .requestMatchers(ADMIN_WHITELIST).hasAuthority(Roles.ROLE_ADMIN.name())
-                        .requestMatchers(USER_WHITELIST).hasAuthority(Roles.ROLE_USER.name())
+                        .requestMatchers(USER_WHITELIST).hasAnyAuthority(Roles.ROLE_USER.name())
                         .requestMatchers(REQUESTER_WHITELIST).hasAuthority(Roles.ROLE_REQUESTER.name())
                         .requestMatchers(PURCHASER_WHITELIST).hasAuthority(Roles.ROLE_PURCHASER.name())
                         .requestMatchers(APPROVER_WHITELIST).hasAuthority(Roles.ROLE_APPROVER.name())
