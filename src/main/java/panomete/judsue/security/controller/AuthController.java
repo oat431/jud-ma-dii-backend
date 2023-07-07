@@ -38,13 +38,6 @@ public class AuthController {
     final JwtTokenUtil jwtTokenUtil;
     final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    /*
-     * todo: implement auth controller by
-     * - /auth/forgot-password (PATCH)
-     * - /auth/reset-password (PATCH)
-     * - /auth/email (PATCH)
-     * - /auth/username (PATCH)
-     */
     @PostMapping("/")
     @Operation(summary = "Login", description = "Login")
     public ResponseEntity<?> login(@RequestBody LoginRequest login) {
@@ -60,6 +53,9 @@ public class AuthController {
     private ResponseEntity<?> createToken(Users user) {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        }
+        if(!user.isEnabled()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("this account is locked");
         }
         JwtResponse jwtResponse = new JwtResponse(jwtTokenUtil.generateJWT(user, 604800L));
         return ResponseEntity.ok(jwtResponse);
