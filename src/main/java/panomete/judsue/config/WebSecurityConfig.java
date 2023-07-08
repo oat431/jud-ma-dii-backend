@@ -58,6 +58,8 @@ public class WebSecurityConfig {
             "/api/v1/auth/username",
             "/api/v1/auth/forgetpassword",
             "/api/v1/auth/refresh",
+            "/api/v1/item/**",
+            "/api/v1/bill/**"
     };
 
     private static final String[] ADMIN_WHITELIST = {

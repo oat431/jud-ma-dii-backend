@@ -29,7 +29,8 @@ public class ApplicationConfig implements ApplicationListener<ApplicationReadyEv
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-//        log.info("===== Mock Data Started ======");
+        log.info("===== Mock Data Started ======");
+//        addAuthorities();
 //        mockAdmin();
 //        mockUser();
 //        mockRequester();
@@ -51,7 +52,6 @@ public class ApplicationConfig implements ApplicationListener<ApplicationReadyEv
     private void mockAdmin() {
         log.info("=====Mock Admin======");
         Authorities admin = authoritiesRepository.findByName(Roles.ROLE_ADMIN);
-        log.info("role {} : ", admin.getName());
         Location location1 = Location.builder()
                 .address("somewhere")
                 .state("somestate")
@@ -94,7 +94,6 @@ public class ApplicationConfig implements ApplicationListener<ApplicationReadyEv
                 .location(location2)
                 .build();
         authRepository.saveAll(List.of(admin1, admin2));
-        log.info("=====  Mocked  ======");
     }
 
     private void mockUser() {
@@ -140,7 +139,6 @@ public class ApplicationConfig implements ApplicationListener<ApplicationReadyEv
                 .location(location2)
                 .build();
         authRepository.saveAll(List.of(user1, user2));
-        log.info("=====  Mocked  ======");
     }
 
     private void mockRequester() {
@@ -186,7 +184,6 @@ public class ApplicationConfig implements ApplicationListener<ApplicationReadyEv
                 .location(location2)
                 .build();
         authRepository.saveAll(List.of(requester1, requester2));
-        log.info("=====  Mocked  ======");
     }
 
     private void mockPurchaster() {
@@ -232,7 +229,6 @@ public class ApplicationConfig implements ApplicationListener<ApplicationReadyEv
                 .location(location2)
                 .build();
         authRepository.saveAll(List.of(purchaser1, purchaser2));
-        log.info("=====  Mocked  ======");
     }
 
     private void mockAppover() {
@@ -278,6 +274,5 @@ public class ApplicationConfig implements ApplicationListener<ApplicationReadyEv
                 .location(location2)
                 .build();
         authRepository.saveAll(List.of(approver1, approver2));
-        log.info("=====  Mocked  ======");
     }
 }

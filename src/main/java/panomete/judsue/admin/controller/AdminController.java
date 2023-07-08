@@ -1,4 +1,4 @@
-package panomete.judsue.approver.controller;
+package panomete.judsue.admin.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -8,16 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import panomete.judsue.bill.entity.Bill;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/approver/")
-@Tag(name = "Approver API", description = "Approver API")
-public class ApproverController {
-    @PatchMapping("/{bill_id}")
-    @Operation(summary = "approve bill")
-    public ResponseEntity<Bill> approveBill(@PathVariable("bill_id") Long id) {
-        return ResponseEntity.ok().build();
+@RequestMapping("/api/v1/admin/")
+@Tag(name = "Admin API", description = "Admin API")
+public class AdminController {
+    @PatchMapping("/{uuid}")
+    @Operation(summary = "assign role")
+    public ResponseEntity<?> assignRole(@PathVariable("uuid") String uuid) {
+        return null;
     }
 }

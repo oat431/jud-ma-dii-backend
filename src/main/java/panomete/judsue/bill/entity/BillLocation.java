@@ -6,28 +6,25 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bill {
+public class BillLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String name;
-    String description;
+    String address;
+    String city;
+    String state;
 
-    @Enumerated(EnumType.STRING)
-    BillStatus status;
+    @Builder.Default
+    String country = "Thailand";
 
-    @OneToOne
-    BillLocation location;
+    String zip;
 
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    List<ItemList> itemLists;
+    @OneToOne(mappedBy = "location", cascade = CascadeType.ALL)
+    Bill bill;
 }
