@@ -29,7 +29,7 @@ public class ApplicationConfig implements ApplicationListener<ApplicationReadyEv
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        log.info("===== Mock Data Started ======");
+//        log.info("===== Mock Data Started ======");
 //        addAuthorities();
 //        mockAdmin();
 //        mockUser();
