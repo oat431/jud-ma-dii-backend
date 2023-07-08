@@ -5,9 +5,13 @@ spring:
   profiles:
     active: dev
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?createDatabaseIfNotExist=true&autoReconnect=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+#    docker db
+#    url: jdbc:postgresql://localhost:5432/postgres?createDatabaseIfNotExist=true&autoReconnect=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+#    username: postgres
+#    password: postgres
+    url: jdbc:postgresql://db.cvuroqszsazbcvdawvix.supabase.co:5432/postgres?createDatabaseIfNotExist=true&autoReconnect=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: postgres
-    password: postgres
+    password: Saha@6462++
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -32,4 +36,4 @@ springdoc:
     filter: true
 
 server:
-  port: 8080
+  port: 5000
