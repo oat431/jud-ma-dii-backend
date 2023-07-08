@@ -1,13 +1,11 @@
-package panomete.judsue.product.entity;
+package panomete.judsue.item.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import panomete.judsue.bill.entity.ItemList;
 
 import java.math.BigDecimal;
 
@@ -16,7 +14,7 @@ import java.math.BigDecimal;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
@@ -26,4 +24,7 @@ public class Product {
     String description;
 
     BigDecimal price;
+
+    @OneToOne(mappedBy = "item")
+    ItemList itemList;
 }
