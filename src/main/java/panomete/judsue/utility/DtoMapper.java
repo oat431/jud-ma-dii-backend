@@ -16,8 +16,8 @@ public interface DtoMapper {
     DtoMapper INSTANCE = Mappers.getMapper(DtoMapper.class);
 
     @Mapping(target = "price", expression = "java(item.getPrice().toString())")
-    ItemDto toProductDto(Item item);
-    List<ItemDto> toProductDto(List<Item> items);
+    ItemDto toItemDto(Item item);
+    List<ItemDto> toItemDto(List<Item> items);
 
     @Mappings({
             @Mapping(target = "id", expression = "java(user.getUserId())"),

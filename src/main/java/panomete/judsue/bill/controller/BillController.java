@@ -1,6 +1,7 @@
 package panomete.judsue.bill.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import panomete.judsue.bill.entity.Bill;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/bill")
 @Tag(name = "Bill API", description = "Bill API")
+@SecurityRequirement(name = "Bearer Authentication")
 public class BillController {
     @GetMapping("/")
     @Operation(summary = "get bills as pagination")
