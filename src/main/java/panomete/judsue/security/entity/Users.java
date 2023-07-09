@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import panomete.judsue.bill.entity.Bill;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -54,6 +55,9 @@ public class Users implements UserDetails {
 
     @OneToOne
     Location location;
+
+    @OneToMany(mappedBy = "user")
+    List<Bill> bills;
 
     @ManyToOne
     Authorities authorities;

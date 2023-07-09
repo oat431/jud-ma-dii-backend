@@ -19,11 +19,15 @@ public interface DtoMapper {
 
     @Mapping(target = "price", expression = "java(item.getPrice().toString())")
     ItemDto toItemDto(Item item);
-    List<ItemDto> toItemDto(List<Item> items);
+    List<ItemDto> toItemDto(List<Item> item);
 
-    @Mapping(target = "total", expression = "java(bill.calculateTotal())")
+    @Mappings({
+            @Mapping(target = "total", expression = "java(bill.calculateTotal())"),
+            @Mapping(target = "createdBy", expression = "java(bill.getUser().getFullName())"),
+            @Mapping(target = "status", expression = "java(bill.getStatus().toString())")
+    })
     BillDto toBillDto(Bill bill);
-    List<BillDto> toBillDto(List<Bill> bills);
+    List<BillDto> toBillDto(List<Bill> bill);
 
     @Mappings({
             @Mapping(target = "id", expression = "java(user.getUserId())"),
