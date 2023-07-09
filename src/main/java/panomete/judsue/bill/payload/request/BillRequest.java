@@ -1,4 +1,6 @@
 package panomete.judsue.bill.payload.request;
 
-public record BillRequest() {
+import java.util.List;
+
+public record BillRequest(String name, String description, List<ItemList> items) {
 }

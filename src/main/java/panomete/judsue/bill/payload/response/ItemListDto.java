@@ -1,4 +1,6 @@
 package panomete.judsue.bill.payload.response;
 
-public record ItemListDto() {
+import panomete.judsue.item.payload.response.ItemDto;
+
+public record ItemListDto(ItemDto item, Integer amount) {
 }
