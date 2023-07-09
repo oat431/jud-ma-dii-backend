@@ -1,4 +1,4 @@
 package panomete.judsue.item.payload.response;
 
-public record ItemDto(String name, String description, String price) {}
+public record ItemDto(Long id ,String name, String description, String price) {}
 

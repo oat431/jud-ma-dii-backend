@@ -1,6 +1,7 @@
 package panomete.judsue.purchaster.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import panomete.judsue.bill.entity.Bill;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/purchaster")
+@SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "Purchaster API", description = "Purchaster API")
 public class PurchasterController {
     @PatchMapping("/{bill_id}")
