@@ -1,4 +1,4 @@
-package panomete.judsue.approver.controller;
+package panomete.judsue.purchaser.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -10,54 +10,51 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import panomete.judsue.approver.request.RejectRequest;
-import panomete.judsue.approver.service.ApproverService;
 import panomete.judsue.bill.entity.Bill;
+import panomete.judsue.bill.payload.request.BillLocationRequest;
 import panomete.judsue.bill.payload.response.BillDto;
 import panomete.judsue.bill.payload.response.PageBillDto;
+import panomete.judsue.purchaser.request.PurchaserStatus;
+import panomete.judsue.purchaser.service.PurchaserService;
 import panomete.judsue.utility.DtoMapper;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/approver/")
+@RequestMapping("/api/v1/purchaser")
 @SecurityRequirement(name = "Bearer Authentication")
-@Tag(name = "Approver API", description = "Approver API")
-public class ApproverController {
-    final ApproverService approverService;
+@Tag(name = "Purchaser API", description = "Purchaser API")
+public class PurchaserController {
+    final PurchaserService purchaserService;
 
     @PatchMapping("/{bill_id}")
-    @Operation(summary = "approve bill")
-    public ResponseEntity<BillDto> approveBill(
+    @Operation(summary = "purchase bill")
+    public ResponseEntity<BillDto> purchaseBill(
             @PathVariable("bill_id") Long id,
-            @RequestParam Boolean approved,
-            @RequestBody(required = false) RejectRequest reason
+            @RequestBody BillLocationRequest request,
+            @RequestParam("action") PurchaserStatus status
     ) {
-        Bill bill = approved ? approverService.approveBill(id) : approverService.rejectBill(id, reason.reason());
+        Bill bill = switch (status) {
+            case PURCHASING -> purchaserService.purchasingItem(id);
+            case DELIVERED -> purchaserService.purchasdItem(id, request);
+            case CANCELED -> purchaserService.cancelPurchasdItem(id);
+            default -> null;
+        };
         return new ResponseEntity<>(
                 DtoMapper.INSTANCE.toBillDto(bill),
                 HttpStatus.OK
         );
     }
 
-    @GetMapping("/{bill_id}")
-    @Operation(summary = "get bills details")
-    public ResponseEntity<BillDto> getBillsAsApprover(@PathVariable("bill_id") Long id) {
-        return new ResponseEntity<>(
-                DtoMapper.INSTANCE.toBillDto(approverService.getBill(id)),
-                HttpStatus.OK
-        );
-    }
-
     @GetMapping("/")
-    @Operation(summary = "get all bills")
-    public ResponseEntity<PageBillDto> getBillsAsPaginationAsApprover(
+    @Operation(summary = "get all bills approved")
+    public ResponseEntity<PageBillDto> getBillsAsPurchaser(
             @RequestParam(value = "_page", defaultValue = "1") int page,
             @RequestParam(value = "_size", defaultValue = "10") int size
     ) {
         PageRequest pageRequest = PageRequest.of(page - 1, size);
-        Page<Bill> bills = approverService.getBills(pageRequest);
+        Page<Bill> bills = purchaserService.getApprovedBills(pageRequest);
         List<BillDto> billList = DtoMapper.INSTANCE.toBillDto(bills.getContent());
         PageBillDto pageBillDto = new PageBillDto(
                 billList,
@@ -68,6 +65,18 @@ public class ApproverController {
         );
         return new ResponseEntity<>(
                 pageBillDto,
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/{bill_id}")
+    @Operation(summary = "get bills details")
+    public ResponseEntity<BillDto> getBillAsPurchaser(
+            @PathVariable("bill_id") Long id
+    ) {
+        Bill bill = purchaserService.getBill(id);
+        return new ResponseEntity<>(
+                DtoMapper.INSTANCE.toBillDto(bill),
                 HttpStatus.OK
         );
     }

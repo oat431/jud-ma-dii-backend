@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import panomete.judsue.bill.entity.Bill;
+import panomete.judsue.bill.entity.BillStatus;
 import panomete.judsue.bill.repository.BillRepository;
 import panomete.judsue.security.entity.Users;
 
@@ -35,7 +36,17 @@ public class BillDaoImpl implements BillDao{
     }
 
     @Override
+    public Page<Bill> getOnlyApprovedBills(PageRequest pageRequest) {
+        return billRepository.findAllByStatusAndIsActiveTrue(BillStatus.APPROVED,pageRequest);
+    }
+
+    @Override
+    public Bill getOnlyApprovedBill(Long id) {
+        return billRepository.findByIdAndStatusAndIsActiveTrue(id,BillStatus.APPROVED);
+    }
+
+    @Override
     public Page<Bill> getBills(PageRequest pageRequest) {
-        return billRepository.findAll(pageRequest);
+        return billRepository.findAllByIsActiveTrue(pageRequest);
     }
 }

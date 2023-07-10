@@ -1,5 +1,15 @@
 package panomete.judsue.bill.entity;
 
 public enum BillStatus {
-    WAITING, APPROVED, REJECTED, CANCELED, DELIVERED
+    // after create bill
+    WAITING,
+
+    // only approver
+    APPROVED,
+    REJECTED,
+
+    // only purchaster
+    PURCHASING,
+    CANCELED,
+    DELIVERED
 }
