@@ -9,7 +9,7 @@ public record BillDto(
         List<ItemListDto> itemLists,
         String total,
         String createdBy,
-        String status
-
+        String status,
+        String reason
 ) {
 }

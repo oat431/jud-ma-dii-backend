@@ -11,10 +11,7 @@ import java.util.List;
 
 public interface BillService {
     // global bill pool
-    Bill createBill(BillRequest request, Users requester);
-    Bill updateBill(Long id, BillRequest request);
     Bill getBill(Long id);
-    Bill deleteBill(Long id);
     Page<Bill> getBills(PageRequest pageRequest);
     Page<Bill> searchBills(BillFilter filter, PageRequest pageRequest);
 
