@@ -2,4 +2,5 @@
 - [x] Feature 1 : Authentication
 - [x] Feature 2 : Requester
 - [x] Feature 3 : Approve Requester
-- [ ] Feature 4 : Purchaser
+- [x] Feature 4 : Purchaser
+- [ ] Feature 5 : Admin
