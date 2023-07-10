@@ -3,4 +3,4 @@
 - [x] Feature 2 : Requester
 - [x] Feature 3 : Approve Requester
 - [x] Feature 4 : Purchaser
-- [ ] Feature 5 : Admin
+- [x] Feature 5 : Admin
