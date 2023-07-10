@@ -16,4 +16,8 @@ public interface BillDao {
     // requester only pool
     Page<Bill> getBillsByUser(Users user, PageRequest pageRequest);
     Bill getBillByUser(Long id, Users user);
+
+    // purchaser only pool
+    Page<Bill> getOnlyApprovedBills(PageRequest pageRequest);
+    Bill getOnlyApprovedBill(Long id);
 }

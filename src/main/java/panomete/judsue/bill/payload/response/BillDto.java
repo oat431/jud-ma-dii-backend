@@ -10,6 +10,7 @@ public record BillDto(
         String total,
         String createdBy,
         String status,
-        String reason
+        String reason,
+        BillLocationDto location
 ) {
 }
