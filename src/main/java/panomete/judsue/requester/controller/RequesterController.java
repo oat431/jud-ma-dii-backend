@@ -41,7 +41,7 @@ public class RequesterController {
 
     @GetMapping("/")
     @Operation(summary = "get bill of requester")
-    public ResponseEntity<PageBillDto> getBill(
+    public ResponseEntity<PageBillDto> getBillsAsPaginationOfRequester(
             @RequestParam(value = "_page", defaultValue = "1") int page,
             @RequestParam(value = "_size", defaultValue = "10") int size
     ) {
@@ -65,7 +65,7 @@ public class RequesterController {
 
     @GetMapping("/{id}")
     @Operation(summary = "get bill details only for requester")
-    public ResponseEntity<BillDto> getBill(@PathVariable("id") Long id) {
+    public ResponseEntity<BillDto> getBillAsRequester(@PathVariable("id") Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Users user = authService.getUserByUsername(auth.getName());
         return new ResponseEntity<>(
