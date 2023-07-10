@@ -15,6 +15,7 @@ public class ApproverServiceImpl implements ApproverService {
     public Bill approveBill(Long id) {
         Bill bill = billDao.getBill(id);
         bill.setStatus(BillStatus.APPROVED);
+        bill.setReason("");
         return billDao.saveBill(bill);
     }
 

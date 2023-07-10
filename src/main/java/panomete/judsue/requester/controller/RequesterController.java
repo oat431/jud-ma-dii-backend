@@ -16,7 +16,7 @@ import panomete.judsue.bill.entity.Bill;
 import panomete.judsue.bill.payload.request.BillRequest;
 import panomete.judsue.bill.payload.response.BillDto;
 import panomete.judsue.bill.payload.response.PageBillDto;
-import panomete.judsue.bill.service.BillService;
+import panomete.judsue.requester.service.RequesterService;
 import panomete.judsue.security.entity.Users;
 import panomete.judsue.security.service.AuthService;
 import panomete.judsue.utility.DtoMapper;
@@ -29,7 +29,7 @@ import java.util.List;
 @SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "Requester API", description = "Requester API")
 public class RequesterController {
-    final BillService billService;
+    final RequesterService billService;
     final AuthService authService;
     @PostMapping("/")
     @Operation(summary = "create bill")
