@@ -1,6 +1,8 @@
 package panomete.judsue.security.dao;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import panomete.judsue.security.entity.Authorities;
 import panomete.judsue.security.entity.Location;
@@ -57,5 +59,15 @@ public class AuthDaoImpl implements AuthDao {
     @Override
     public Location saveLocation(Location location) {
         return locationRepository.save(location);
+    }
+
+    @Override
+    public Page<Users> getAllLockedUser(PageRequest pageRequest) {
+        return authRepository.findAllByEnablesFalse(pageRequest);
+    }
+
+    @Override
+    public Page<Users> getAllUsers(PageRequest pageRequest) {
+        return authRepository.findAll(pageRequest);
     }
 }
