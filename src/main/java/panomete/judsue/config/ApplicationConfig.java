@@ -169,6 +169,7 @@ public class ApplicationConfig implements ApplicationListener<ApplicationReadyEv
                 .authorities(requester)
                 .birthday(Date.valueOf("1994-01-01"))
                 .location(location1)
+                .enables(true)
                 .build();
         Users requester2 = Users.builder()
                 .username("requester2")

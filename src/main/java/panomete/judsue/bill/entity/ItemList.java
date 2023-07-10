@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import panomete.judsue.item.entity.Item;
 
-import java.util.List;
-
 @Data
 @Entity
 @Builder
@@ -21,11 +19,11 @@ public class ItemList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @OneToOne
+    @ManyToOne
     Item item;
 
     Integer amount;
 
-    @ManyToMany(mappedBy = "itemLists")
-    List<Bill> bill;
+    @ManyToOne
+    Bill bill;
 }

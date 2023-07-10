@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import panomete.judsue.bill.entity.ItemList;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Builder
@@ -25,6 +26,6 @@ public class Item {
 
     BigDecimal price;
 
-    @OneToOne(mappedBy = "item")
-    ItemList itemList;
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    List<ItemList> itemList;
 }
