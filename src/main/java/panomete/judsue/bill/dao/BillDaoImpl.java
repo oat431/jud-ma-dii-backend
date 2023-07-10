@@ -46,6 +46,16 @@ public class BillDaoImpl implements BillDao{
     }
 
     @Override
+    public Page<Bill> getOnlyWaitngBills(PageRequest pageRequest) {
+        return billRepository.findAllByStatusAndIsActiveTrue(BillStatus.WAITING,pageRequest);
+    }
+
+    @Override
+    public Bill getOnlyWaitngBill(Long id) {
+        return billRepository.findByIdAndStatusAndIsActiveTrue(id,BillStatus.WAITING);
+    }
+
+    @Override
     public Page<Bill> getBills(PageRequest pageRequest) {
         return billRepository.findAllByIsActiveTrue(pageRequest);
     }
