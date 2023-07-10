@@ -35,5 +35,6 @@ springdoc:
     tags-sorter: alpha
     filter: true
 
-server:
-  port: 5000
+# incase port 8080 is already in use
+#server:
+#  port: 5000
