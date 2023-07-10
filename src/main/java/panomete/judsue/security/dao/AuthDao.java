@@ -1,5 +1,7 @@
 package panomete.judsue.security.dao;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import panomete.judsue.security.entity.Authorities;
 import panomete.judsue.security.entity.Location;
 import panomete.judsue.security.entity.Roles;
@@ -19,4 +21,8 @@ public interface AuthDao {
     Authorities getAuthorityByName(Roles name);
 
     Location saveLocation(Location location);
+
+    Page<Users> getAllLockedUser(PageRequest pageRequest);
+
+    Page<Users> getAllUsers(PageRequest pageRequest);
 }

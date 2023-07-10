@@ -36,4 +36,5 @@ public interface DtoMapper {
             @Mapping(target = "role", expression = "java(user.getSimpleAuthorities())")
     })
     AuthDto toAuthDto(Users user);
+    List<AuthDto> toAuthDto(List<Users> user);
 }

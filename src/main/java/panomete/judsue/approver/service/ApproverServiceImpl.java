@@ -31,11 +31,11 @@ public class ApproverServiceImpl implements ApproverService {
 
     @Override
     public Bill getBill(Long id) {
-        return billDao.getBill(id);
+        return billDao.getOnlyWaitngBill(id);
     }
 
     @Override
     public Page<Bill> getBills(PageRequest pageRequest) {
-        return billDao.getBills(pageRequest);
+        return billDao.getOnlyWaitngBills(pageRequest);
     }
 }

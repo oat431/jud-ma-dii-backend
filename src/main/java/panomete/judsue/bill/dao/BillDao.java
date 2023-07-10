@@ -20,4 +20,7 @@ public interface BillDao {
     // purchaser only pool
     Page<Bill> getOnlyApprovedBills(PageRequest pageRequest);
     Bill getOnlyApprovedBill(Long id);
+
+    Page<Bill> getOnlyWaitngBills(PageRequest pageRequest);
+    Bill getOnlyWaitngBill(Long id);
 }
