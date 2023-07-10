@@ -19,7 +19,7 @@ public class ItemList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     Item item;
 
     Integer amount;
