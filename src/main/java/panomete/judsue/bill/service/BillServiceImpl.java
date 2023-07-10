@@ -12,6 +12,7 @@ import panomete.judsue.bill.entity.ItemList;
 import panomete.judsue.bill.payload.request.BillFilter;
 import panomete.judsue.bill.payload.request.BillRequest;
 import panomete.judsue.item.dao.ItemDao;
+import panomete.judsue.security.dao.AuthDao;
 import panomete.judsue.security.entity.Users;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class BillServiceImpl implements BillService{
     final BillDao billDao;
     final ItemListDao itemListDao;
     final ItemDao itemDao;
+    final AuthDao authDao;
 
     @Override
     @Transactional
@@ -43,6 +45,8 @@ public class BillServiceImpl implements BillService{
         Bill bill = billDao.getBill(id);
         bill.setName(request.name());
         bill.setDescription(request.description());
+        bill.getItemLists().stream().forEach(itemList -> itemListDao.deleteItemListById(itemList.getId()));
+        bill.setItemLists(new ArrayList<>());
         return getItemList(request, bill);
     }
 
@@ -69,8 +73,8 @@ public class BillServiceImpl implements BillService{
     @Override
     public Bill deleteBill(Long id) {
         Bill bill = billDao.getBill(id);
-        billDao.deleteBillById(id);
-        return bill;
+        bill.setIsActive(false);
+        return billDao.saveBill(bill);
     }
 
     @Override
@@ -81,5 +85,15 @@ public class BillServiceImpl implements BillService{
     @Override
     public Page<Bill> searchBills(BillFilter filter, PageRequest pageRequest) {
         return null;
+    }
+
+    @Override
+    public Page<Bill> getBillsByUser(Users user, PageRequest pageRequest) {
+        return billDao.getBillsByUser(user, pageRequest);
+    }
+
+    @Override
+    public Bill getBillByUser(Long id, Users user) {
+        return billDao.getBillByUser(id, user);
     }
 }

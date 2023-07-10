@@ -30,6 +30,11 @@ public class Bill {
     @OneToOne
     BillLocation location;
 
+    String reason;
+
+    @Builder.Default
+    Boolean isActive = true;
+
     @ManyToOne
     Users user;
 

@@ -6,6 +6,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import panomete.judsue.bill.entity.Bill;
 import panomete.judsue.bill.repository.BillRepository;
+import panomete.judsue.security.entity.Users;
+
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -22,8 +25,13 @@ public class BillDaoImpl implements BillDao{
     }
 
     @Override
-    public void deleteBillById(Long id) {
-        billRepository.deleteById(id);
+    public Page<Bill> getBillsByUser(Users user, PageRequest pageRequest) {
+        return billRepository.findAllByUserAndIsActiveTrue(user,pageRequest);
+    }
+
+    @Override
+    public Bill getBillByUser(Long id, Users user) {
+        return billRepository.findByIdAndIsActiveTrueAndUser(id,user);
     }
 
     @Override
