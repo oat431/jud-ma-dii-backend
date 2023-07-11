@@ -27,10 +27,10 @@ import panomete.judsue.utility.JwtTokenUtil;
 
 import java.util.UUID;
 
-@Controller
-@RequestMapping("/api/v1/auth")
-@RequiredArgsConstructor
 @Slf4j
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/auth")
 @Tag(name = "Authentication API", description = "the authentication API")
 public class AuthController {
     final AuthService authService;
