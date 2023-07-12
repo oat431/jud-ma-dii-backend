@@ -28,7 +28,7 @@ import java.util.List;
 public class PurchaserController {
     final PurchaserService purchaserService;
 
-    @PatchMapping("/{bill_id}")
+    @PostMapping("/{bill_id}")
     @Operation(summary = "purchase bill")
     public ResponseEntity<BillDto> purchaseBill(
             @PathVariable("bill_id") Long id,
