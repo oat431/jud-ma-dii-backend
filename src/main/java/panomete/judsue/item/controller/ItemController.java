@@ -44,7 +44,7 @@ public class ItemController {
 
     @PostMapping("/")
     @Operation(summary = "create item")
-    public ResponseEntity<ItemDto> createItem(ItemRequest item) {
+    public ResponseEntity<ItemDto> createItem(@RequestBody ItemRequest item) {
         return new ResponseEntity<>(
                 DtoMapper.INSTANCE.toItemDto(itemService.createItem(item)),
                 HttpStatus.CREATED
@@ -53,7 +53,7 @@ public class ItemController {
 
     @PutMapping("/{id}")
     @Operation(summary = "update item by id")
-    public ResponseEntity<ItemDto> updateItem(@PathVariable("id") Long id, ItemRequest item) {
+    public ResponseEntity<ItemDto> updateItem(@PathVariable("id") Long id, @RequestBody ItemRequest item) {
         return new ResponseEntity<>(
                 DtoMapper.INSTANCE.toItemDto(itemService.updateItem(id, item)),
                 HttpStatus.OK
