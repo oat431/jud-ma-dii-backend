@@ -7,6 +7,7 @@ import panomete.judsue.bill.payload.request.BillLocationRequest;
 
 public interface PurchaserService {
     Page<Bill> getApprovedBills(PageRequest pageRequest);
+    Page<Bill> getPurchasingBills(PageRequest pageRequest);
     Bill getBill(Long id);
     Bill purchasingItem(Long id);
     Bill purchasdItem(Long id, BillLocationRequest request);

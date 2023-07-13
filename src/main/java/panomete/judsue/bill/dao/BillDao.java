@@ -3,6 +3,7 @@ package panomete.judsue.bill.dao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import panomete.judsue.bill.entity.Bill;
+import panomete.judsue.bill.entity.BillStatus;
 import panomete.judsue.security.entity.Users;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface BillDao {
     Bill getBillByUser(Long id, Users user);
 
     // purchaser only pool
-    Page<Bill> getOnlyApprovedBills(PageRequest pageRequest);
+    Page<Bill> getBillsByStatus(PageRequest pageRequest, BillStatus status);
     Bill getOnlyApprovedBill(Long id);
 
     Page<Bill> getOnlyWaitngBills(PageRequest pageRequest);

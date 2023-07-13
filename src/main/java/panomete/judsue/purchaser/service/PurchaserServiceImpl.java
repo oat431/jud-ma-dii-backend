@@ -19,12 +19,17 @@ public class PurchaserServiceImpl implements PurchaserService {
 
     @Override
     public Page<Bill> getApprovedBills(PageRequest pageRequest) {
-        return billDao.getOnlyApprovedBills(pageRequest);
+        return billDao.getBillsByStatus(pageRequest, BillStatus.APPROVED);
+    }
+
+    @Override
+    public Page<Bill> getPurchasingBills(PageRequest pageRequest) {
+        return billDao.getBillsByStatus(pageRequest, BillStatus.PURCHASING);
     }
 
     @Override
     public Bill getBill(Long id) {
-        return billDao.getOnlyApprovedBill(id);
+        return billDao.getBill(id);
     }
 
     @Override

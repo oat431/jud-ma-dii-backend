@@ -36,8 +36,8 @@ public class BillDaoImpl implements BillDao{
     }
 
     @Override
-    public Page<Bill> getOnlyApprovedBills(PageRequest pageRequest) {
-        return billRepository.findAllByStatusAndIsActiveTrue(BillStatus.APPROVED,pageRequest);
+    public Page<Bill> getBillsByStatus(PageRequest pageRequest, BillStatus status) {
+        return billRepository.findAllByStatusAndIsActiveTrue(status,pageRequest);
     }
 
     @Override

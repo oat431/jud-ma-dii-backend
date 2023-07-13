@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import panomete.judsue.bill.entity.Bill;
+import panomete.judsue.bill.entity.BillStatus;
 import panomete.judsue.bill.payload.request.BillLocationRequest;
 import panomete.judsue.bill.payload.response.BillDto;
 import panomete.judsue.bill.payload.response.PageBillDto;
@@ -51,10 +52,15 @@ public class PurchaserController {
     @Operation(summary = "get all bills approved")
     public ResponseEntity<PageBillDto> getBillsAsPurchaser(
             @RequestParam(value = "_page", defaultValue = "1") int page,
-            @RequestParam(value = "_size", defaultValue = "10") int size
+            @RequestParam(value = "_size", defaultValue = "10") int size,
+            @RequestParam(value = "_status", defaultValue = "APPROVED") BillStatus status
     ) {
         PageRequest pageRequest = PageRequest.of(page - 1, size);
-        Page<Bill> bills = purchaserService.getApprovedBills(pageRequest);
+       Page<Bill> bills = switch (status) {
+            case APPROVED -> purchaserService.getApprovedBills(pageRequest);
+            case PURCHASING -> purchaserService.getPurchasingBills(pageRequest);
+            default -> null;
+        };
         List<BillDto> billList = DtoMapper.INSTANCE.toBillDto(bills.getContent());
         PageBillDto pageBillDto = new PageBillDto(
                 billList,
