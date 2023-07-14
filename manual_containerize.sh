@@ -1,6 +1,6 @@
 rm -rf ./docker
-./gradlew clean
-./gradlew build -x test
+gradlew clean
+gradlew build -x test
 mkdir docker
 cp ./build/libs/judsue-one.jar ./docker/app.jar
 cd docker
