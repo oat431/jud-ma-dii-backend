@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import panomete.judsue.bill.dao.BillDao;
 import panomete.judsue.bill.dao.ItemListDao;
 import panomete.judsue.bill.entity.Bill;
+import panomete.judsue.bill.entity.BillStatus;
 import panomete.judsue.bill.entity.ItemList;
 import panomete.judsue.bill.payload.request.BillRequest;
 import panomete.judsue.item.dao.ItemDao;
@@ -45,6 +46,7 @@ public class RequesterServiceImpl implements RequesterService {
         bill.setName(request.name());
         bill.setDescription(request.description());
         bill.getItemLists().stream().forEach(itemList -> itemListDao.deleteItemListById(itemList.getId()));
+        bill.setStatus(BillStatus.WAITING);
         bill.setItemLists(new ArrayList<>());
         return getItemList(request, bill);
     }
