@@ -9,8 +9,6 @@ import panomete.judsue.bill.entity.BillStatus;
 import panomete.judsue.bill.repository.BillRepository;
 import panomete.judsue.security.entity.Users;
 
-import java.util.List;
-
 @Repository
 @RequiredArgsConstructor
 public class BillDaoImpl implements BillDao{

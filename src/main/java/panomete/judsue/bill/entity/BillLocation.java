@@ -6,12 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BillLocation {
+public class BillLocation implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 20L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -21,7 +27,7 @@ public class BillLocation {
     String state;
 
     @Builder.Default
-    String country = "Thailand";
+    String country = "";
 
     String zip;
 

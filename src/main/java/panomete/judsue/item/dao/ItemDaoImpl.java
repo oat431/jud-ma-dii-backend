@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import panomete.judsue.item.entity.Item;
 import panomete.judsue.item.repository.ItemRepository;
 
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -33,6 +34,6 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public List<Item> searchItems(String name) {
-        return null;
+        return Collections.emptyList();
     }
 }

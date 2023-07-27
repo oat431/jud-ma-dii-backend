@@ -6,8 +6,6 @@ import panomete.judsue.bill.entity.Bill;
 import panomete.judsue.bill.entity.BillStatus;
 import panomete.judsue.security.entity.Users;
 
-import java.util.List;
-
 public interface BillDao {
     // global bill pool
     Bill saveBill(Bill bill);

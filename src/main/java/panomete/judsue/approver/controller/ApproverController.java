@@ -34,7 +34,12 @@ public class ApproverController {
             @RequestParam Boolean approved,
             @RequestBody(required = false) RejectRequest reason
     ) {
-        Bill bill = approved ? approverService.approveBill(id) : approverService.rejectBill(id, reason.reason());
+        Bill bill;
+        if(approved) {
+            bill = approverService.approveBill(id);
+        } else {
+            bill = approverService.rejectBill(id, reason.reason());
+        }
         return new ResponseEntity<>(
                 DtoMapper.INSTANCE.toBillDto(bill),
                 HttpStatus.OK

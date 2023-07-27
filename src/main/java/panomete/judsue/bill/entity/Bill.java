@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import panomete.judsue.security.entity.Users;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -15,7 +17,10 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bill {
+public class Bill implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 3L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -40,7 +45,7 @@ public class Bill {
 
 
     @OneToMany(mappedBy = "bill",cascade = CascadeType.ALL)
-    List<ItemList> itemLists;
+    transient List<ItemList> itemLists;
 
     public String calculateTotal() {
         BigDecimal total = BigDecimal.ZERO;

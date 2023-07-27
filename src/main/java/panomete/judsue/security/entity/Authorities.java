@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -13,7 +15,10 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Authorities {
+public class Authorities implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 4L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authorities_seq")
     @SequenceGenerator(name="authorities_seq", sequenceName = "authorities_seq", allocationSize = 1)
@@ -23,5 +28,5 @@ public class Authorities {
     Roles name;
 
     @OneToMany(mappedBy = "authorities")
-    List<Users> user;
+    transient List<Users> user;
 }

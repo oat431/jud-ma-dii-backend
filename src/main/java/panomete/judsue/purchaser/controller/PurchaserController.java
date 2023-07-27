@@ -61,6 +61,9 @@ public class PurchaserController {
             case PURCHASING -> purchaserService.getPurchasingBills(pageRequest);
             default -> null;
         };
+       if(bills == null) {
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+       }
         List<BillDto> billList = DtoMapper.INSTANCE.toBillDto(bills.getContent());
         PageBillDto pageBillDto = new PageBillDto(
                 billList,

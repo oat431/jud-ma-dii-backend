@@ -11,6 +11,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import panomete.judsue.bill.entity.Bill;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collection;
@@ -23,7 +25,11 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Users implements UserDetails {
+public class Users implements UserDetails, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
@@ -57,7 +63,7 @@ public class Users implements UserDetails {
     Location location;
 
     @OneToMany(mappedBy = "user")
-    List<Bill> bills;
+    transient List<Bill> bills;
 
     @ManyToOne
     Authorities authorities;

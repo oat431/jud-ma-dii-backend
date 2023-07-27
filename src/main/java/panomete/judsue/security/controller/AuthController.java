@@ -1,5 +1,6 @@
 package panomete.judsue.security.controller;
 
+import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,10 +17,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import panomete.judsue.security.entity.Users;
 import panomete.judsue.security.payload.request.LoginRequest;
 import panomete.judsue.security.payload.request.RegisterRequest;
 import panomete.judsue.security.payload.request.UpdateRequest;
+import panomete.judsue.security.payload.response.AuthDto;
 import panomete.judsue.security.payload.response.JwtResponse;
 import panomete.judsue.security.service.AuthService;
 import panomete.judsue.utility.DtoMapper;
@@ -40,22 +43,22 @@ public class AuthController {
 
     @PostMapping("/")
     @Operation(summary = "Login", description = "Login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest login) {
+    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest login) {
         if (login.username() == null) {
             return createToken(loginWithEmail(login.email(), login.password()));
         }
         if (login.email() == null) {
             return createToken(loginWithUsername(login.username(), login.password()));
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("username or email are missing");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "username or email is required");
     }
 
-    private ResponseEntity<?> createToken(Users user) {
+    private ResponseEntity<JwtResponse> createToken(Users user) {
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "username or password is incorrect");
         }
         if(!user.isEnabled()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("this account is locked");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "this account is locked");
         }
         JwtResponse jwtResponse = new JwtResponse(jwtTokenUtil.generateJWT(user, 604800L));
         return ResponseEntity.ok(jwtResponse);
@@ -90,7 +93,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     @Operation(summary = "Create a new user", description = "Create a new user")
-    public ResponseEntity<?> createUserAccount(@RequestBody RegisterRequest user) {
+    public ResponseEntity<AuthDto> createUserAccount(@RequestBody RegisterRequest user) {
         Users newAccount = authService.createUser(user);
         return ResponseEntity.ok(
                 DtoMapper.INSTANCE.toAuthDto(newAccount)
@@ -100,7 +103,7 @@ public class AuthController {
     @GetMapping("/details")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Get user details", description = "Get user details")
-    public ResponseEntity<?> getUserDetails() {
+    public ResponseEntity<AuthDto> getUserDetails() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Users user = authService.getUserByUsername(auth.getName());
         return ResponseEntity.ok(
@@ -111,7 +114,7 @@ public class AuthController {
     @GetMapping("/refresh")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Refresh token", description = "Refresh token")
-    public ResponseEntity<?> refreshToken(HttpServletRequest request) {
+    public ResponseEntity<JwtResponse> refreshToken(HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
         String refreshedToken = jwtTokenUtil.refreshJWT(token, 604800L);
         return ResponseEntity.ok(
@@ -122,7 +125,7 @@ public class AuthController {
     @GetMapping("/credentials")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Get user credentials", description = "Get user credentials")
-    public ResponseEntity<?> getUserCredentials(HttpServletRequest request) {
+    public ResponseEntity<Claims> getUserCredentials(HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
         return ResponseEntity.ok(
                 jwtTokenUtil.getClaimsFromToken(token)
@@ -132,7 +135,7 @@ public class AuthController {
     @PutMapping("/")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Update user details", description = "Update user details")
-    public ResponseEntity<?> updateUserDetails(@RequestBody UpdateRequest update) {
+    public ResponseEntity<AuthDto> updateUserDetails(@RequestBody UpdateRequest update) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UUID userId = authService.getUserByUsername(auth.getName()).getId();
         Users updated = authService.updateUser(userId, update);

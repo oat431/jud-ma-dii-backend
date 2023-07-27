@@ -9,5 +9,4 @@ public interface ItemListDao {
     ItemList saveAllItemLists(List<ItemList> itemLists);
     ItemList getItemListById(Long id);
     void deleteItemListById(Long id);
-//    List<ItemList> getItemListsByBillId(Long billId);
 }
